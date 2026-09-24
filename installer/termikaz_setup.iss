@@ -1,6 +1,6 @@
 ; Script Inno Setup 7 para TermiKAZ 🦅
 #define MyAppName "TermiKAZ"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.1.0"
 #define MyAppPublisher "Armando Soares & Kaz Community"
 #define MyAppURL "https://github.com/armandosds/Kaz"
 #define MyAppExeName "termikaz.exe"

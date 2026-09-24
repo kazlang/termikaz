@@ -6,10 +6,11 @@
 
 [![Rust](https://img.shields.io/badge/Rust-1.80%2B-orange.svg?style=flat&logo=rust)](https://www.rust-lang.org)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20(x64)-blue.svg?style=flat&logo=windows)](https://microsoft.com/windows)
-[![Kaz Language](https://img.shields.io/badge/Language-Kaz%201.0.0-purple.svg?style=flat)](https://github.com/armandosds/Kaz)
+[![TermiKAZ](https://img.shields.io/badge/TermiKAZ-1.1.0-red.svg?style=flat)](https://github.com/armandosds/TermiKAZ)
+[![Kaz Language](https://img.shields.io/badge/Language-Kaz%201.1.0-purple.svg?style=flat)](https://github.com/armandosds/Kaz)
 [![License](https://img.shields.io/badge/License-MIT%20%2F%20Apache--2.0-green.svg)](LICENSE)
 
-**TermiKAZ** é um emulador de terminal e ambiente shell POSIX de altíssimo desempenho desenvolvido em **Rust**. Projetado especificamente para desenvolvedores no Windows, ele oferece um ecossistema completo de comandos Linux nativos (sem necessidade de WSL, Cygwin ou máquinas virtuais), experiência rica de autocompletion com **`[TAB]`**, interface gráfica moderna acelerada por GPU e integração in-process com o ecossistema da linguagem de programação **Kaz** (`kaz.exe`).
+**TermiKAZ** é um emulador de terminal e ambiente shell POSIX de altíssimo desempenho desenvolvido em **Rust**. Projetado especificamente para desenvolvedores no Windows, ele oferece um ecossistema completo de comandos Linux nativos (sem necessidade de WSL, Cygwin ou máquinas virtuais), experiência rica de autocompletion com **`[TAB]`**, interface gráfica moderna acelerada por GPU e integração in-process com o ecossistema da linguagem de programação **Kaz v1.1.0** (`kaz.exe`).
 
 </div>
 
@@ -63,9 +64,19 @@ Tudo é compilado em código de máquina nativo x64, com tradução bidirecional
 
 ---
 
-## 🦅 Integração com a Linguagem Kaz
+## 🦅 Integração com a Linguagem Kaz (v1.1.0)
 
-O TermiKAZ possui comunicação in-process direta com a crate da linguagem de programação **Kaz**:
+O TermiKAZ possui comunicação in-process direta com a crate da linguagem de programação **Kaz v1.1.0**, aproveitando todas as inovações recentes da linguagem:
+
+- 🏷️ **Tagged Unions / Enums com Dados**: Suporte total a tipos algébricos com dados associados (`enum Status { Pendente, Processada(int), Falha(string) }`).
+- 🎯 **Pattern Matching (`match`)**: Desestruturação exaustiva de variantes e valores com wildcard (`_`).
+- 🔢 **Operadores Bitwise**: Operações binárias completas (`&`, `|`, `^`, `~`, `<<`, `>>`).
+- 🏛️ **4 Pilares da Biblioteca Padrão Expandida**:
+  - **Math**: Funções matemáticas ampliadas (trigonometria, exponenciais, arredondamentos).
+  - **Slicing & Arrays**: Fatiamento seguro e manipulação dinâmica de listas.
+  - **String Transformations**: Transformações eficientes e codificação de strings.
+  - **Search & Filter**: Busca, filtragem e predicados de alta performance.
+- ⚡ **JIT ARC & Cranelift**: Suporte a contagem de referências atômicas e slab allocator em compilações nativas JIT.
 
 | Comando | Descrição |
 | :--- | :--- |
@@ -157,12 +168,12 @@ O TermiKAZ inclui um emulador de terminal gráfico com abas via `--gui`:
 
 Na pasta `dist/`, você encontra instaladores prontos para Windows:
 
-1. **Inno Setup 7 (Recomendado)**: `dist/TermiKAZ_Setup_v1.0.0.exe`
+1. **Inno Setup 7 (Recomendado)**: `dist/TermiKAZ_Setup_v1.1.0.exe`
    - Adiciona automaticamente o TermiKAZ ao `PATH` do sistema.
    - Adiciona a opção **"Abrir TermiKAZ Aqui"** no menu de contexto do Windows Explorer (ao clicar com o botão direito em pastas ou no fundo de diretórios).
    - Cria atalhos no Menu Iniciar e na Área de Trabalho com o ícone oficial `flux.ico`.
    - Inclui desinstalador completo.
-2. **NSIS**: `dist/TermiKAZ_NSIS_Setup_v1.0.0.exe`
+2. **NSIS**: `dist/TermiKAZ_NSIS_Setup_v1.1.0.exe`
    - Instalador portátil alternativo em formato compacto.
 
 ### Compilação a partir do Código-Fonte
@@ -176,7 +187,7 @@ Pré-requisitos:
 git clone https://github.com/armandosds/TermiKAZ.git
 cd TermiKAZ
 
-# 2. Executar a suíte de testes (18 testes automatizados)
+# 2. Executar a suíte de testes (20 testes automatizados)
 cargo test
 
 # 3. Compilar em modo release com otimizações máximas (LTO)
