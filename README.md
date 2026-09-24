@@ -4,16 +4,10 @@
 
 ### Emulador de Terminal & Shell Linux/POSIX Nativo para Windows com Integração à Linguagem Kaz
 
+[![Rust](https://img.shields.io/badge/Rust-1.80%2B-orange.svg?style=flat&logo=rust)](https://www.rust-lang.org)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20(x64)-blue.svg?style=flat&logo=windows)](https://microsoft.com/windows)
-[![Kaz Language](https://img.shields.io/badge/Language-Kaz%201.0.0-purple.svg?style=flat)](https://github.com/kazlang/kaz)
-[![License](https://img.shields.io/badge/License-Freeware%20%2F%20Proprietary-green.svg)](LICENSE)
-[![Release](https://img.shields.io/badge/Release-v1.0.0-orange.svg)](https://github.com/kazlang/termikaz/releases)
-
-<br>
-
-<img src="assets/termikaz_preview.png" alt="TermiKAZ Preview" width="850" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);" />
-
-<br><br>
+[![Kaz Language](https://img.shields.io/badge/Language-Kaz%201.0.0-purple.svg?style=flat)](https://github.com/armandosds/Kaz)
+[![License](https://img.shields.io/badge/License-MIT%20%2F%20Apache--2.0-green.svg)](LICENSE)
 
 **TermiKAZ** é um emulador de terminal e ambiente shell POSIX de altíssimo desempenho desenvolvido em **Rust**. Projetado especificamente para desenvolvedores no Windows, ele oferece um ecossistema completo de comandos Linux nativos (sem necessidade de WSL, Cygwin ou máquinas virtuais), experiência rica de autocompletion com **`[TAB]`**, interface gráfica moderna acelerada por GPU e integração in-process com o ecossistema da linguagem de programação **Kaz** (`kaz.exe`).
 
@@ -30,14 +24,14 @@
 - [Interface Gráfica & ConPTY](#-interface-gráfica--conpty)
 - [Instalação](#-instalação)
   - [Instaladores Oficiais Windows](#instaladores-oficiais-windows)
-  - [Configuração de Atalhos](#configuração-de-atalhos)
+  - [Compilação a partir do Código-Fonte](#compilação-a-partir-do-código-fonte)
 - [Guia de Uso](#-guia-de-uso)
   - [1. Shell Interativo (CLI)](#1-shell-interativo-cli)
   - [2. Emulador de Terminal Gráfico (GUI)](#2-emulador-de-terminal-gráfico-gui)
   - [3. Modo de Comando Único (`-c`)](#3-modo-de-comando-único--c)
   - [4. Execução Direta de Scripts Kaz](#4-execução-direta-de-scripts-kaz)
 - [Comandos Linux Nativos Suportados](#-comandos-linux-nativos-suportados)
-- [Arquitetura & Ecossistema](#-arquitetura--ecossistema)
+- [Arquitetura do Projeto](#-arquitetura-do-projeto)
 - [Licença](#-licença)
 
 ---
@@ -46,7 +40,7 @@
 
 O TermiKAZ resolve o clássico atrito de desenvolvimento no Windows: a necessidade de comandos Linux ágeis (`ls`, `grep`, `cat`, `curl`, `tree`, pipes, etc.) sem o overhead de inicialização de subsistemas pesados como o WSL. 
 
-Tudo é compilado em código de máquina nativo x64, com tradução bidirecional transparente entre caminhos POSIX (`/c/ProjetosAM/...`, `~`) e caminhos Windows (`C:\ProjetosAM\...`), suporte a unidades (`c:`, `d:`, `e:`) e atalhos rápidos (`cd..`, `cd ~`, `clear`, `cls`).
+Tudo é compilado em código de máquina nativo x64, com tradução bidirecional transparente entre caminhos POSIX (`/c/ProjetosAM/...`, `~`) e caminhos Windows (`C:\ProjetosAM\...`), suporte a drives (`c:`, `d:`, `e:`) e atalhos rápidos (`cd..`, `cd ~`, `clear`, `cls`).
 
 ---
 
@@ -71,12 +65,14 @@ Tudo é compilado em código de máquina nativo x64, com tradução bidirecional
 
 ## 🦅 Integração com a Linguagem Kaz
 
-O TermiKAZ possui comunicação direta com o motor da linguagem de programação **Kaz**:
+O TermiKAZ possui comunicação in-process direta com a crate da linguagem de programação **Kaz**:
 
 | Comando | Descrição |
 | :--- | :--- |
 | `kaz <arquivo.kaz>` | Executa diretamente na **Kaz Stack Bytecode VM** |
 | `kaz run <arquivo.kaz>` | Executa arquivo com resolução automática de entrypoint (`main.kaz` / `src/main.kaz`) |
+| `kaz jit <arquivo.kaz>` | Compila e executa diretamente via **Cranelift JIT** em código de máquina nativo x86_64 |
+| `kaz build <arquivo.kaz> [-o saida]` | Gera executável autônomo (.exe) sem dependências ou objeto nativo (`--emit-obj`) |
 | `kaz fmt [caminho] [--check]` | Formata o código Kaz no padrão canônico com validação AST de segurança |
 | `kaz test [caminho]` | Executa a suíte de testes unitários nativos da Kaz |
 | `kaz trace <arquivo.kaz>` | Rastreia a Stack VM instrução por instrução em tempo real |
@@ -87,7 +83,7 @@ O TermiKAZ possui comunicação direta com o motor da linguagem de programação
 | `kaz repl` | Inicia o console REPL interativo Kaz |
 | `kaz shell` / `kaz term` | Inicia o Kaz Terminal Shell nativo |
 
-Você também pode executar qualquer arquivo `.kaz` diretamente como um script/binário:
+Você também pode executar qualquer arquivo `.kaz` diretamente como um binário:
 ```bash
 ./meu_script.kaz
 termikaz meu_script.kaz
@@ -95,17 +91,40 @@ termikaz meu_script.kaz
 
 ---
 
+## 🎨 Temas e Janela Personalizada
+
+Para fugir da aparência padrão do console do Windows, o TermiKAZ oferece uma interface moderna e customizável:
+
+### 1. Temas Exclusivos Selecionáveis:
+- 🦅 **Kaz Neon (Padrão)**: Fundo obsidian profundo (`#0b0d14`), acentos em violeta Kaz (`#cba6f7`), ciano (`#89dceb`) e menta neon.
+- ☕ **Catppuccin Mocha**: Paleta pastel aveludada com tons lavanda, pêssego e safira.
+- 🧛 **Dracula**: Tons clássicos de roxo Drácula, rosa choque e ciano elétrico.
+- 📟 **Matrix Retro**: Tema hacker OLED com verde fósforo fosforescente (`#00ff66`).
+
+### 2. Recursos Visuais da Janela:
+- **Ícone Nativo Oficial**: Ícone `flux.ico` embutido na barra de título, barra de tarefas e instaladores.
+- **Breadcrumb & Git Branch Ativo**: Identificação automática do branch git (` main`) e caminho POSIX no cabeçalho.
+- **Prompt Starship / Powerline em TrueColor**:
+  ```text
+  ╭─ 🦅 armando@termikaz [/c/ProjetosAM/TermiKAZ] ─[git:main]
+  ╰─❯ 
+  ```
+- **Chips de Sugestão Flutuantes**: Visualização instantânea de termos que serão completados ao teclar `[TAB]`.
+
+---
+
 ## ⚡ Autocomplete Rápido com [TAB]
 
-Para fluxos de trabalho ágeis, o TermiKAZ integra um motor contextual de autocompletion:
+Para fluxos de trabalho rápidos, o TermiKAZ integra um motor contextual de autocompletion:
 
 1. **Auto-preenchimento de Comandos**:
    - Digite `k` + `[TAB]` $\rightarrow$ completa `kaz `.
    - Digite `c` + `[TAB]` $\rightarrow$ lista `cd`, `cat`, `clear`, `cls`, `curl`, `cp`, etc.
 2. **Subcomandos Kaz Sensíveis ao Contexto**:
-   - `kaz ` + `[TAB]` $\rightarrow$ exibe todos os subcomandos Kaz (`fmt`, `test`, `run`, `trace`, `debug`, `db-cli`, `check`, `vm`, `repl`, etc.) com descrições detalhadas.
-   - `kaz f` + `[TAB]` $\rightarrow$ completa `kaz fmt `.
-   - `kaz fmt --` + `[TAB]` $\rightarrow$ completa `--check`.
+   - `kaz ` + `[TAB]` $\rightarrow$ exibe todos os subcomandos Kaz (`fmt`, `test`, `run`, `jit`, `build`, `trace`, `debug`, `db-cli`, `check`, `vm`, `repl`, etc.) com descrições detalhadas.
+   - `kaz j` + `[TAB]` $\rightarrow$ completa `kaz jit `.
+   - `kaz b` + `[TAB]` $\rightarrow$ completa `kaz build `.
+   - `kaz build -` + `[TAB]` $\rightarrow$ lista flags como `--emit-obj`, `--jit`, `--vm`, `-o`.
 3. **Navegação Inteligente de Pastas e Arquivos**:
    - `cd ` filtra **apenas diretórios** e adiciona a barra `/` automaticamente, permitindo encadear `[TAB]` para navegar em pastas profundas (`cd s` + `[TAB]` $\rightarrow$ `cd src/` + `s` + `[TAB]` $\rightarrow$ `cd src/shell/`).
    - Autocomplete de caminhos com suporte a POSIX (`/c/...`), Windows (`C:\...`), relativos (`../`, `./`) e home (`~/`).
@@ -118,16 +137,17 @@ Para fluxos de trabalho ágeis, o TermiKAZ integra um motor contextual de autoco
 
 O TermiKAZ inclui um emulador de terminal gráfico com abas via `--gui`:
 
-- **Multi-abas**: Crie e feche abas (`TermiKAZ #1`, `TermiKAZ #2`, etc.) para múltiplos fluxos de trabalho simultâneos.
-- **Renderização por GPU**: Construído sobre `egui` e `eframe` com tema dark Kaz (`#11111b`, tons neon).
+- **Multi-abas**: Crie e feche abas (`TermiKAZ #1`, `TermiKAZ #2`, etc.) para múltiplos fluxos de trabalho.
+- **Renderização por GPU**: Construído sobre `egui` e `eframe` com seletor de temas em tempo real.
 - **Botões de Ação Rápida**:
-  - `🧹 Kaz Fmt`: Formatação canônica do diretório.
-  - `🧪 Kaz Test`: Execução dos testes Kaz.
-  - `🔍 Kaz Audit`: Auditoria estrutural e sintática do projeto.
+  - `⚡ JIT`: Execução de alto desempenho via Cranelift JIT.
+  - `🧹 Fmt`: Formatação canônica do diretório.
+  - `🧪 Test`: Execução dos testes Kaz.
+  - `🔍 Audit`: Auditoria estrutural e sintática do projeto.
   - `📁 ls -la`: Listagem detalhada com cores.
   - `🌳 tree`: Árvore visual de arquivos.
   - `A+` / `A-`: Ajuste de tamanho de fonte em tempo real.
-- **Suporte ConPTY**: Integração nativa com o subsistema de pseudoterminal do Windows.
+- **Suporte ConPTY**: Integração opcional com o subsistema de pseudoterminal nativo do Windows.
 
 ---
 
@@ -135,34 +155,56 @@ O TermiKAZ inclui um emulador de terminal gráfico com abas via `--gui`:
 
 ### Instaladores Oficiais Windows
 
-Na pasta [`dist/`](dist/), você encontra instaladores prontos para Windows x64:
+Na pasta `dist/`, você encontra instaladores prontos para Windows:
 
-1. **Inno Setup (Recomendado)**: `dist/TermiKAZ_Setup_v1.0.0.exe`
+1. **Inno Setup 7 (Recomendado)**: `dist/TermiKAZ_Setup_v1.0.0.exe`
    - Adiciona automaticamente o TermiKAZ ao `PATH` do sistema.
-   - Adiciona a opção **"Abrir TermiKAZ Aqui"** no menu de contexto do Windows Explorer (botão direito em qualquer pasta).
+   - Adiciona a opção **"Abrir TermiKAZ Aqui"** no menu de contexto do Windows Explorer (ao clicar com o botão direito em pastas ou no fundo de diretórios).
    - Cria atalhos no Menu Iniciar e na Área de Trabalho com o ícone oficial `flux.ico`.
-   - Inclui assistente de desinstalação completo.
-2. **NSIS (Portátil)**: `dist/TermiKAZ_NSIS_Setup_v1.0.0.exe`
+   - Inclui desinstalador completo.
+2. **NSIS**: `dist/TermiKAZ_NSIS_Setup_v1.0.0.exe`
    - Instalador portátil alternativo em formato compacto.
+
+### Compilação a partir do Código-Fonte
+
+Pré-requisitos:
+- [Rust & Cargo](https://rustup.rs/) (versão 1.80 ou superior)
+- Repositório da linguagem Kaz no diretório adjacente (`../kaz`)
+
+```powershell
+# 1. Clonar o repositório
+git clone https://github.com/armandosds/TermiKAZ.git
+cd TermiKAZ
+
+# 2. Executar a suíte de testes (18 testes automatizados)
+cargo test
+
+# 3. Compilar em modo release com otimizações máximas (LTO)
+cargo build --release
+```
+
+O binário final estará em `target/release/termikaz.exe`.
 
 ---
 
 ## 🚀 Guia de Uso
 
 ### 1. Shell Interativo (CLI)
-Inicie o shell no terminal ou PowerShell:
+Inicie o shell no terminal:
 ```powershell
 termikaz
+# ou
+.\target\release\termikaz.exe
 ```
 
 ### 2. Emulador de Terminal Gráfico (GUI)
-Abra a interface visual acelerada por GPU:
+Abra a interface com abas acelerada por GPU:
 ```powershell
 termikaz --gui
 ```
 
 ### 3. Modo de Comando Único (`-c`)
-Execute comandos diretamente a partir de scripts externos ou PowerShell:
+Execute comandos diretamente a partir de scripts, PowerShell ou prompt do Windows:
 ```powershell
 termikaz -c "ls -la | grep kaz"
 termikaz -c "kaz fmt . --check && kaz test"
@@ -189,16 +231,47 @@ termikaz caminho/para/script.kaz
 
 ---
 
-## 🏗️ Arquitetura & Ecossistema
+## 🏗️ Arquitetura do Projeto
 
-O TermiKAZ faz parte do ecossistema oficial da linguagem de programação **Kaz**:
-
-* **Linguagem Kaz:** [github.com/kazlang/kaz](https://github.com/kazlang/kaz)
-* **Extensão VS Code / Lumina IDE:** [Marketplace](https://marketplace.visualstudio.com/items?itemName=Kaz-Language.kaz-language)
-* **TermiKAZ:** [github.com/kazlang/termikaz](https://github.com/kazlang/termikaz)
+```text
+TermiKAZ/
+├── assets/                  # Identidade visual, ícones (flux.ico) e logos
+├── installer/               # Scripts de empacotamento Inno Setup 7 e NSIS
+│   ├── termikaz_setup.iss   # Script Inno Setup 7 com integração ao Explorer
+│   └── termikaz_setup.nsi   # Script NSIS portátil
+├── dist/                    # Instaladores compilados prontos para distribuição
+├── src/
+│   ├── app/                 # Interface gráfica egui/eframe e ConPTY
+│   │   ├── terminal_window.rs  # Janela de abas com TAB completion e botões Kaz
+│   │   └── pty_session.rs      # Gerenciamento de processos PTY
+│   ├── commands/            # Implementação em Rust dos utilitários Linux
+│   │   ├── fs_ops.rs        # ls, cd, pwd, mkdir, rm, cp, mv, touch, tree, stat, df
+│   │   ├── text_ops.rs      # cat, head, tail, grep, wc, find, sort, uniq, echo
+│   │   ├── sys_ops.rs       # uname, whoami, hostname, date, ps, kill, env, which
+│   │   ├── net_ops.rs       # curl, wget, fetch
+│   │   └── mod.rs           # Despachante de comandos built-in
+│   ├── kaz_interop/         # Integração profunda com o ecossistema Kaz
+│   │   └── runner.rs        # Invocação da VM, AST, Formatter, Test Runner, Audit
+│   ├── shell/               # Núcleo do emulador e shell POSIX
+│   │   ├── path_translator.rs # Tradução POSIX (/c/...) <-> Windows (C:\...)
+│   │   ├── parser.rs        # Parser de pipes, redirecionamentos e variáveis
+│   │   ├── evaluator.rs     # Motor de execução e encadeamento lógico
+│   │   ├── prompt.rs        # Renderizador de prompt POSIX estilizado
+│   │   ├── completer.rs     # Motor inteligente de Autocomplete com [TAB]
+│   │   └── readline.rs      # Linha de comando com reedline e ColumnarMenu
+│   ├── lib.rs               # Biblioteca central exportada
+│   └── main.rs              # Ponto de entrada CLI e GUI
+├── tests/                   # Suíte de testes automatizados
+│   ├── command_tests.rs     # Testes de comandos do sistema de arquivos e pipes
+│   ├── completer_tests.rs   # Testes do motor de autocompletion [TAB]
+│   ├── kaz_tests.rs         # Testes de integração com a linguagem Kaz
+│   └── parser_tests.rs      # Testes de parsing e expansão de variáveis
+├── build.rs                 # Vinculação de ícones nativos do Windows (.ico)
+└── Cargo.toml               # Dependências e perfis de otimização
+```
 
 ---
 
 ## 📜 Licença
 
-Distribuído sob a licença **TermiKAZ Community Freeware License**. Consulte o arquivo [LICENSE](LICENSE) para mais informações.
+Distribuído sob as licenças **MIT** ou **Apache-2.0**. Consulte os arquivos de licença para mais informações.
