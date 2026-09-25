@@ -1,6 +1,6 @@
-; Script NSIS para TermiKAZ 🦅
+; Script NSIS para TermiKAZ
 !define PRODUCT_NAME "TermiKAZ"
-!define PRODUCT_VERSION "1.1.0"
+!define PRODUCT_VERSION "1.2.0"
 !define PRODUCT_PUBLISHER "Armando Soares & Kaz Community"
 !define PRODUCT_WEB_SITE "https://github.com/armandosds/Kaz"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\termikaz.exe"

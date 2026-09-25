@@ -6,7 +6,7 @@
 
 [![Rust](https://img.shields.io/badge/Rust-1.80%2B-orange.svg?style=flat&logo=rust)](https://www.rust-lang.org)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20(x64)-blue.svg?style=flat&logo=windows)](https://microsoft.com/windows)
-[![TermiKAZ](https://img.shields.io/badge/TermiKAZ-1.1.0-red.svg?style=flat)](https://github.com/armandosds/TermiKAZ)
+[![TermiKAZ](https://img.shields.io/badge/TermiKAZ-1.2.0-red.svg?style=flat)](https://github.com/armandosds/TermiKAZ)
 [![Kaz Language](https://img.shields.io/badge/Language-Kaz%201.1.0-purple.svg?style=flat)](https://github.com/armandosds/Kaz)
 [![License](https://img.shields.io/badge/License-MIT%20%2F%20Apache--2.0-green.svg)](LICENSE)
 
@@ -117,8 +117,8 @@ Para fugir da aparência padrão do console do Windows, o TermiKAZ oferece uma i
 - **Breadcrumb & Git Branch Ativo**: Identificação automática do branch git (` main`) e caminho POSIX no cabeçalho.
 - **Prompt Starship / Powerline em TrueColor**:
   ```text
-  ╭─ 🦅 armando@termikaz [/c/ProjetosAM/TermiKAZ] ─[git:main]
-  ╰─❯ 
+  ┌─ [kaz] armando@termikaz [/c/ProjetosAM/TermiKAZ] ─[git:main]
+  └─> 
   ```
 - **Chips de Sugestão Flutuantes**: Visualização instantânea de termos que serão completados ao teclar `[TAB]`.
 
@@ -151,12 +151,12 @@ O TermiKAZ inclui um emulador de terminal gráfico com abas via `--gui`:
 - **Multi-abas**: Crie e feche abas (`TermiKAZ #1`, `TermiKAZ #2`, etc.) para múltiplos fluxos de trabalho.
 - **Renderização por GPU**: Construído sobre `egui` e `eframe` com seletor de temas em tempo real.
 - **Botões de Ação Rápida**:
-  - `⚡ JIT`: Execução de alto desempenho via Cranelift JIT.
-  - `🧹 Fmt`: Formatação canônica do diretório.
-  - `🧪 Test`: Execução dos testes Kaz.
-  - `🔍 Audit`: Auditoria estrutural e sintática do projeto.
-  - `📁 ls -la`: Listagem detalhada com cores.
-  - `🌳 tree`: Árvore visual de arquivos.
+  - `JIT`: Execução de alto desempenho via Cranelift JIT.
+  - `Fmt`: Formatação canônica do diretório.
+  - `Test`: Execução dos testes Kaz.
+  - `Audit`: Auditoria estrutural e sintática do projeto.
+  - `ls -la`: Listagem detalhada com cores.
+  - `tree`: Árvore visual de arquivos.
   - `A+` / `A-`: Ajuste de tamanho de fonte em tempo real.
 - **Suporte ConPTY**: Integração opcional com o subsistema de pseudoterminal nativo do Windows.
 
@@ -168,12 +168,12 @@ O TermiKAZ inclui um emulador de terminal gráfico com abas via `--gui`:
 
 Na pasta `dist/`, você encontra instaladores prontos para Windows:
 
-1. **Inno Setup 7 (Recomendado)**: `dist/TermiKAZ_Setup_v1.1.0.exe`
+1. **Inno Setup 7 (Recomendado)**: `dist/TermiKAZ_Setup_v1.2.0.exe`
    - Adiciona automaticamente o TermiKAZ ao `PATH` do sistema.
    - Adiciona a opção **"Abrir TermiKAZ Aqui"** no menu de contexto do Windows Explorer (ao clicar com o botão direito em pastas ou no fundo de diretórios).
    - Cria atalhos no Menu Iniciar e na Área de Trabalho com o ícone oficial `flux.ico`.
    - Inclui desinstalador completo.
-2. **NSIS**: `dist/TermiKAZ_NSIS_Setup_v1.1.0.exe`
+2. **NSIS**: `dist/TermiKAZ_NSIS_Setup_v1.2.0.exe`
    - Instalador portátil alternativo em formato compacto.
 
 ### Compilação a partir do Código-Fonte
@@ -187,7 +187,7 @@ Pré-requisitos:
 git clone https://github.com/armandosds/TermiKAZ.git
 cd TermiKAZ
 
-# 2. Executar a suíte de testes (20 testes automatizados)
+# 2. Executar a suíte de testes (21 testes automatizados)
 cargo test
 
 # 3. Compilar em modo release com otimizações máximas (LTO)
