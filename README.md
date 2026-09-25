@@ -86,6 +86,7 @@ O TermiKAZ possui comunicação in-process direta com a crate da linguagem de pr
 
 | Comando | Descrição |
 | :--- | :--- |
+| `kaz new <nome>` / `create` | Cria um novo projeto Kaz estruturado com SQLite, modelos e testes unitários |
 | `kaz <arquivo.kaz>` | Executa diretamente na **Kaz Stack Bytecode VM** |
 | `kaz run <arquivo.kaz>` | Executa arquivo com resolução automática de entrypoint (`main.kaz` / `src/main.kaz`) |
 | `kaz jit <arquivo.kaz>` | Compila e executa diretamente via **Cranelift JIT** em código de máquina nativo x86_64 |
@@ -193,7 +194,7 @@ Pré-requisitos:
 git clone https://github.com/armandosds/TermiKAZ.git
 cd TermiKAZ
 
-# 2. Executar a suíte de testes (21 testes automatizados)
+# 2. Executar a suíte de testes (22 testes automatizados)
 cargo test
 
 # 3. Compilar em modo release com otimizações máximas (LTO)
