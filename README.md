@@ -33,6 +33,8 @@
   - [4. Execução Direta de Scripts Kaz](#4-execução-direta-de-scripts-kaz)
 - [Comandos Linux Nativos Suportados](#-comandos-linux-nativos-suportados)
 - [Arquitetura do Projeto](#-arquitetura-do-projeto)
+- [Segurança & Auditoria](#-segurança--auditoria)
+- [Changelog](#-changelog)
 - [Licença](#-licença)
 
 ---
@@ -280,6 +282,20 @@ TermiKAZ/
 ├── build.rs                 # Vinculação de ícones nativos do Windows (.ico)
 └── Cargo.toml               # Dependências e perfis de otimização
 ```
+
+---
+
+## 🛡️ Segurança & Auditoria
+
+O TermiKAZ passa por auditorias contínuas de segurança (`cargo audit`). Todas as políticas de divulgação responsável, proteções ativas contra injeção de comandos (CVE-2024-24576) e histórico de mitigação de vulnerabilidades estão documentados em:
+👉 **[SECURITY.md](SECURITY.md)**
+
+---
+
+## 📋 Changelog
+
+Para conferir o histórico detalhado de todas as alterações, novos recursos e correções entre versões:
+👉 **[CHANGELOG.md](CHANGELOG.md)**
 
 ---
 
