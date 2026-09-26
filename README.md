@@ -4,6 +4,10 @@
 
 ### Emulador de Terminal & Shell Linux/POSIX Nativo para Windows com Integração à Linguagem Kaz
 
+<p align="center">
+    <img src="assets/termikaz_preview.png" width="750" alt="Kaz Logo">
+</p>
+
 [![Rust](https://img.shields.io/badge/Rust-1.80%2B-orange.svg?style=flat&logo=rust)](https://www.rust-lang.org)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20(x64)-blue.svg?style=flat&logo=windows)](https://microsoft.com/windows)
 [![TermiKAZ](https://img.shields.io/badge/TermiKAZ-1.2.0-red.svg?style=flat)](https://github.com/armandosds/TermiKAZ)
