@@ -37,9 +37,10 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 ### 🦅 Linguagem Kaz
 - Sincronização direta com a biblioteca e runtime da linguagem Kaz v1.1.0 (`kaz = { path = "../kaz" }`).
 - **Novo Comando `kaz new <nome>` / `kaz create <nome>`:** Scaffolding automático de projetos estruturados em Kaz contendo `kaz.json`, integração SQLite (`database.kaz`), modelos (`usuario.kaz`), ponto de entrada `main.kaz`, schema SQL (`schema.sql`) e testes unitários (`main_test.kaz`).
+- **Correção de Fallback Indesejado no KazRunner (`src/kaz_interop/runner.rs`):** Removido o fallback automático para o interpretador AST (`kaz::run_source`) em falhas da Stack VM (`kaz::run_source_vm`). O erro original da VM é retornado diretamente, eliminando duplicações acidentais de efeitos colaterais (operações em SQLite, escritas em disco e `runoff`).
 - **Autocomplete Aprimorado:** Sugestões instantâneas para `kaz new` e `kaz create` via TAB no terminal CLI e na interface gráfica.
 - Suporte a tagged unions, pattern matching (`match`), operadores bitwise (`&`, `|`, `^`, `<<`, `>>`) e operador null-coalescing (`??`).
-- Novos testes automatizados de integração Kaz e sanitização de comandos (totalizando 22 testes com 100% de aprovação).
+- Novos testes automatizados de integração Kaz e sanitização de comandos (totalizando 23 testes com 100% de aprovação).
 
 ### 📦 Empacotamento
 - Atualizados scripts de instalação Inno Setup 7 (`TermiKAZ_Setup_v1.2.0.exe`) e NSIS (`TermiKAZ_NSIS_Setup_v1.2.0.exe`).
