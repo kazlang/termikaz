@@ -48,9 +48,10 @@ Section "MainSection" SEC01
 
   SetOutPath "$INSTDIR"
   CreateDirectory "$SMPROGRAMS\TermiKAZ"
+  CreateShortcut "$SMPROGRAMS\TermiKAZ\TermiKAZ.lnk" "$INSTDIR\termikaz.exe" "--gui" "$INSTDIR\assets\flux.ico"
   CreateShortcut "$SMPROGRAMS\TermiKAZ\TermiKAZ (Shell POSIX).lnk" "$INSTDIR\termikaz.exe" "" "$INSTDIR\assets\flux.ico"
   CreateShortcut "$SMPROGRAMS\TermiKAZ\TermiKAZ (Emulador GUI).lnk" "$INSTDIR\termikaz.exe" "--gui" "$INSTDIR\assets\flux.ico"
-  CreateShortcut "$DESKTOP\TermiKAZ.lnk" "$INSTDIR\termikaz.exe" "" "$INSTDIR\assets\flux.ico"
+  CreateShortcut "$DESKTOP\TermiKAZ.lnk" "$INSTDIR\termikaz.exe" "--gui" "$INSTDIR\assets\flux.ico"
   CreateShortcut "$SMPROGRAMS\TermiKAZ\Desinstalar TermiKAZ.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
 
@@ -71,6 +72,7 @@ Section Uninstall
   Delete "$INSTDIR\uninst.exe"
   RMDir /r "$INSTDIR\assets"
 
+  Delete "$SMPROGRAMS\TermiKAZ\TermiKAZ.lnk"
   Delete "$SMPROGRAMS\TermiKAZ\TermiKAZ (Shell POSIX).lnk"
   Delete "$SMPROGRAMS\TermiKAZ\TermiKAZ (Emulador GUI).lnk"
   Delete "$SMPROGRAMS\TermiKAZ\Desinstalar TermiKAZ.lnk"

@@ -34,13 +34,33 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
   - Substituição de emojis e pontas de seta (`🦅`, `╭─`, `╰─❯`, `❯`, `✔`, `✖`, `●`) por caracteres de caixa e setas padrão (`┌─`, `└─>`, `>`, `[OK]`, `[ERRO]`, `[PRONTO]`, `x`).
   - Aprimorado `strip_ansi_or_clean` para descartar com segurança sequências CSI, sequências OSC de título e códigos de controle como `\x07` (BEL) e `\r`.
 
+### 🖥️ Interface Gráfica & Desanexação de Terminal (Desktop & Launcher)
+- **Desanexação Automática do Console Windows (`detach_console_for_gui`):**
+  - Implementada a liberação e ocultação instantânea do console (`ShowWindow(SW_HIDE)` + `FreeConsole()`) ao iniciar no modo gráfico (`--gui` ou `-g`).
+  - **Eliminação de Dependência de Terminal Segundo Plano:** O TermiKAZ abre sua janela gráfica nativa diretamente sem exibir nem manter aberto nenhum prompt `cmd.exe`/`conhost.exe` atrás da interface.
+  - Fechar o terminal não encerra mais o emulador, pois o processo desacopla completamente do console de inicialização.
+- **Detecção Inteligente de Inicialização Avulsa (`is_alone_in_console` via `GetConsoleProcessList`):**
+  - Se o usuário executar o `termikaz.exe` via duplo-clique no Windows Explorer ou por atalho sem argumentos, o emulador detecta que não há terminal pai ativo e abre diretamente a GUI nativa.
+  - Ao ser chamado de dentro de um terminal existente (PowerShell, CMD, Windows Terminal), opera normalmente como shell CLI interativo.
+- **Atalhos e Instaladores Atualizados:**
+  - Atalhos na Área de Trabalho e Menu Iniciar configurados explicitamente com o parâmetro `--gui`.
+  - Menu de contexto do Windows Explorer ("Abrir TermiKAZ Aqui") e inicialização pós-instalação apontados diretamente para o emulador gráfico `--gui`.
+
 ### 🦅 Linguagem Kaz
 - Sincronização direta com a biblioteca e runtime da linguagem Kaz v1.1.0 (`kaz = { path = "../kaz" }`).
+- **Suporte a Mapas e Dicionários Nativos (`map` / `dict`):**
+  - Sintaxes literais flexíveis: `map { "k": v }`, `{ "k": v }`, `dict { ... }` e `{}`.
+  - Indexação para leitura (`m["k"]`) e escrita (`m["k"] = v`), propriedades `.len`, `.keys`, `.size` e métodos nativos `.has()`, `.get()`, `.set()`, `.remove()`, `.clear()`.
+  - Iteração determinística (`for k in m`) com chaves ordenadas via `OpCode::ToIter` na Stack VM e AST.
+- **Funções `to_char(int)` / `chr(int)`:**
+  - Conversão de inteiros para caracteres Unicode (`Value::Char(c)`) com validação estrita do range escalar (`0 <= n <= 0x10FFFF`) e rejeição de surrogates UTF-16 (`0xD800..=0xDFFF`).
+- **I/O Binário (`fs_read_bytes` e `fs_write_bytes`):**
+  - Leitura e escrita direta de bytes brutos (com checagem do intervalo 0..255) nos escopos global e namespace `fs`.
 - **Novo Comando `kaz new <nome>` / `kaz create <nome>`:** Scaffolding automático de projetos estruturados em Kaz contendo `kaz.json`, integração SQLite (`database.kaz`), modelos (`usuario.kaz`), ponto de entrada `main.kaz`, schema SQL (`schema.sql`) e testes unitários (`main_test.kaz`).
 - **Correção de Fallback Indesejado no KazRunner (`src/kaz_interop/runner.rs`):** Removido o fallback automático para o interpretador AST (`kaz::run_source`) em falhas da Stack VM (`kaz::run_source_vm`). O erro original da VM é retornado diretamente, eliminando duplicações acidentais de efeitos colaterais (operações em SQLite, escritas em disco e `runoff`).
 - **Autocomplete Aprimorado:** Sugestões instantâneas para `kaz new` e `kaz create` via TAB no terminal CLI e na interface gráfica.
 - Suporte a tagged unions, pattern matching (`match`), operadores bitwise (`&`, `|`, `^`, `<<`, `>>`) e operador null-coalescing (`??`).
-- Novos testes automatizados de integração Kaz e sanitização de comandos (totalizando 23 testes com 100% de aprovação).
+- Novos testes automatizados de integração Kaz e sanitização de comandos (totalizando 24 testes com 100% de aprovação).
 
 ### 📦 Empacotamento
 - Atualizados scripts de instalação Inno Setup 7 (`TermiKAZ_Setup_v1.2.0.exe`) e NSIS (`TermiKAZ_NSIS_Setup_v1.2.0.exe`).

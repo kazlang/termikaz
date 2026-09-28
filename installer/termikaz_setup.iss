@@ -42,24 +42,25 @@ Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion isreadme
 Source: "..\assets\*"; DestDir: "{app}\assets"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Parameters: "--gui"; IconFilename: "{app}\assets\flux.ico"
 Name: "{group}\{#MyAppName} (Shell POSIX)"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\assets\flux.ico"
 Name: "{group}\{#MyAppName} (Emulador GUI)"; Filename: "{app}\{#MyAppExeName}"; Parameters: "--gui"; IconFilename: "{app}\assets\flux.ico"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\assets\flux.ico"; Tasks: desktopicon
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Parameters: "--gui"; IconFilename: "{app}\assets\flux.ico"; Tasks: desktopicon
 
 [Registry]
 ; Context menu para pastas
 Root: HKCU; Subkey: "Software\Classes\Directory\shell\TermiKAZ"; ValueType: string; ValueName: ""; ValueData: "Abrir TermiKAZ Aqui"; Flags: uninsdeletekey; Tasks: contextmenu
 Root: HKCU; Subkey: "Software\Classes\Directory\shell\TermiKAZ"; ValueType: string; ValueName: "Icon"; ValueData: """{app}\assets\flux.ico"""; Tasks: contextmenu
-Root: HKCU; Subkey: "Software\Classes\Directory\shell\TermiKAZ\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"""; Tasks: contextmenu
+Root: HKCU; Subkey: "Software\Classes\Directory\shell\TermiKAZ\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" --gui"; Tasks: contextmenu
 
 ; Context menu para fundo de pastas (Background)
 Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\TermiKAZ"; ValueType: string; ValueName: ""; ValueData: "Abrir TermiKAZ Aqui"; Flags: uninsdeletekey; Tasks: contextmenu
 Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\TermiKAZ"; ValueType: string; ValueName: "Icon"; ValueData: """{app}\assets\flux.ico"""; Tasks: contextmenu
-Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\TermiKAZ\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"""; Tasks: contextmenu
+Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\TermiKAZ\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" --gui"; Tasks: contextmenu
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#MyAppExeName}"; Parameters: "--gui"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [Code]
 const
