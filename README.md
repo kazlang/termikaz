@@ -11,10 +11,10 @@
 [![Rust](https://img.shields.io/badge/Rust-1.80%2B-orange.svg?style=flat&logo=rust)](https://www.rust-lang.org)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20(x64)-blue.svg?style=flat&logo=windows)](https://microsoft.com/windows)
 [![TermiKAZ](https://img.shields.io/badge/TermiKAZ-1.2.0-red.svg?style=flat)](https://github.com/armandosds/TermiKAZ)
-[![Kaz Language](https://img.shields.io/badge/Language-Kaz%201.1.0-purple.svg?style=flat)](https://github.com/armandosds/Kaz)
+[![Kaz Language](https://img.shields.io/badge/Language-Kaz%201.2.0-purple.svg?style=flat)](https://github.com/armandosds/Kaz)
 [![License](https://img.shields.io/badge/License-MIT%20%2F%20Apache--2.0-green.svg)](LICENSE)
 
-**TermiKAZ** é um emulador de terminal e ambiente shell POSIX de altíssimo desempenho desenvolvido em **Rust**. Projetado especificamente para desenvolvedores no Windows, ele oferece um ecossistema completo de comandos Linux nativos (sem necessidade de WSL, Cygwin ou máquinas virtuais), experiência rica de autocompletion com **`[TAB]`**, interface gráfica moderna acelerada por GPU e integração in-process com o ecossistema da linguagem de programação **Kaz v1.1.0** (`kaz.exe`).
+**TermiKAZ** é um emulador de terminal e ambiente shell POSIX de altíssimo desempenho desenvolvido em **Rust**. Projetado especificamente para desenvolvedores no Windows, ele oferece um ecossistema completo de comandos Linux nativos (sem necessidade de WSL, Cygwin ou máquinas virtuais), experiência rica de autocompletion com **`[TAB]`**, interface gráfica moderna acelerada por GPU e integração in-process com o ecossistema da linguagem de programação **Kaz v1.2.0** (`kaz.exe`), com suporte a compilação e execução instantânea de bytecode serializado portátil (`.kzc`).
 
 </div>
 
@@ -70,13 +70,15 @@ Tudo é compilado em código de máquina nativo x64, com tradução bidirecional
 
 ---
 
-## 🦅 Integração com a Linguagem Kaz (v1.1.0)
+## 🦅 Integração com a Linguagem Kaz (v1.2.0)
 
-O TermiKAZ possui comunicação in-process direta com a crate da linguagem de programação **Kaz v1.1.0**, aproveitando todas as inovações recentes da linguagem:
+O TermiKAZ possui comunicação in-process direta com a crate da linguagem de programação **Kaz v1.2.0**, aproveitando todas as inovações recentes da linguagem e o compilador self-hosted em processo de bootstrap:
 
+- 🚀 **Bytecode Serializado Portátil (`.kzc`)**: Compilação e execução instantânea sub-milissegundo de binários compactos pré-compilados em bytecode.
+- 🧩 **Compilador Self-Hosted (Bootstrap Etapa 2 & 3)**: Compatibilidade com a arquitetura de compilação escrita puramente em Kaz (Lexer, Pratt Parser, Codegen e Bytecode Serializer).
 - 🏷️ **Tagged Unions / Enums com Dados**: Suporte total a tipos algébricos com dados associados (`enum Status { Pendente, Processada(int), Falha(string) }`).
 - 🎯 **Pattern Matching (`match`)**: Desestruturação exaustiva de variantes e valores com wildcard (`_`).
-- 🔢 **Operadores Bitwise**: Operações binárias completas (`&`, `|`, `^`, `~`, `<<`, `>>`).
+- 🔢 **Operadores Bitwise & Funções Nativas**: Operações binárias completas (`&`, `|`, `^`, `~`, `<<`, `>>`) e conversão Unicode (`to_char_code`, `ord`).
 - 🏛️ **4 Pilares da Biblioteca Padrão Expandida**:
   - **Math**: Funções matemáticas ampliadas (trigonometria, exponenciais, arredondamentos).
   - **Slicing & Arrays**: Fatiamento seguro e manipulação dinâmica de listas.
@@ -87,8 +89,9 @@ O TermiKAZ possui comunicação in-process direta com a crate da linguagem de pr
 | Comando | Descrição |
 | :--- | :--- |
 | `kaz new <nome>` / `create` | Cria um novo projeto Kaz estruturado com SQLite, modelos e testes unitários |
-| `kaz <arquivo.kaz>` | Executa diretamente na **Kaz Stack Bytecode VM** |
-| `kaz run <arquivo.kaz>` | Executa arquivo com resolução automática de entrypoint (`main.kaz` / `src/main.kaz`) |
+| `kaz <arquivo.kaz/.kzc>` | Executa diretamente na **Kaz Stack Bytecode VM** |
+| `kaz run <arquivo.kaz/.kzc>` | Executa arquivo ou bytecode compilado com inicialização sub-milissegundo |
+| `kaz compile <arquivo.kaz> [-o saida.kzc]` | Compila código-fonte Kaz diretamente para bytecode serializado portátil (`.kzc`) |
 | `kaz jit <arquivo.kaz>` | Compila e executa diretamente via **Cranelift JIT** em código de máquina nativo x86_64 |
 | `kaz build <arquivo.kaz> [-o saida]` | Gera executável autônomo (.exe) sem dependências ou objeto nativo (`--emit-obj`) |
 | `kaz fmt [caminho] [--check]` | Formata o código Kaz no padrão canônico com validação AST de segurança |
@@ -101,10 +104,11 @@ O TermiKAZ possui comunicação in-process direta com a crate da linguagem de pr
 | `kaz repl` | Inicia o console REPL interativo Kaz |
 | `kaz shell` / `kaz term` | Inicia o Kaz Terminal Shell nativo |
 
-Você também pode executar qualquer arquivo `.kaz` diretamente como um binário:
+Você também pode executar qualquer arquivo `.kaz` ou `.kzc` diretamente como um binário:
 ```bash
 ./meu_script.kaz
-termikaz meu_script.kaz
+./app.kzc
+termikaz app.kzc
 ```
 
 ---

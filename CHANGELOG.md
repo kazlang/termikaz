@@ -7,7 +7,21 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ---
 
-## [1.2.0] - 2026-09-25
+## [1.2.0] - 2026-10-05
+
+### 🚀 Integração Avançada do Bootstrap Kaz (Etapa 2 & 3)
+- **Suporte Nativo a Bytecode Serializado (`.kzc`):**
+  - O TermiKAZ agora executa arquivos binários `.kzc` diretamente em processo via `kaz::vm::run_compiled_bytes`.
+  - Suporte a execução direta (`arquivo.kzc`) e via comando (`kaz run arquivo.kzc`).
+  - Novo subcomando `kaz compile <arquivo.kaz> [-o saida.kzc]` integrado ao runner do TermiKAZ para serialização portátil de bytecode.
+- **Autocompletion Contextual Atualizado:**
+  - `kaz <TAB>` agora sugere `compile` e completa arquivos `.kaz` e `.kzc`.
+  - Sugestão inteligente de flags para `kaz compile` (`-o`, `--output`).
+  - Suporte a extensões `.kzc` no comando `kaz run` e despacho de processos.
+- **Sincronização de Versão e Runtime:**
+  - Atualização dos metadados de versão da linguagem Kaz para `1.2.0`.
+  - Suporte às novas funções nativas do bootstrap (`to_char_code`, `ord`, etc.).
+  - Cobertura de testes expandida para 25 testes automatizados (100% aprovados).
 
 ### 🛡️ Segurança (Security Hardening)
 - **Mitigação de Command Injection via Process Command API (`src/shell/evaluator.rs`):**
