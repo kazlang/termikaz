@@ -10,11 +10,11 @@
 
 [![Rust](https://img.shields.io/badge/Rust-1.80%2B-orange.svg?style=flat&logo=rust)](https://www.rust-lang.org)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20(x64)-blue.svg?style=flat&logo=windows)](https://microsoft.com/windows)
-[![TermiKAZ](https://img.shields.io/badge/TermiKAZ-1.2.0-red.svg?style=flat)](https://github.com/armandosds/TermiKAZ)
-[![Kaz Language](https://img.shields.io/badge/Language-Kaz%201.2.0-purple.svg?style=flat)](https://github.com/armandosds/Kaz)
+[![TermiKAZ](https://img.shields.io/badge/TermiKAZ-1.4.0-red.svg?style=flat)](https://github.com/armandosds/TermiKAZ)
+[![Kaz Language](https://img.shields.io/badge/Language-Kaz%201.4.0-purple.svg?style=flat)](https://github.com/armandosds/Kaz)
 [![License](https://img.shields.io/badge/License-MIT%20%2F%20Apache--2.0-green.svg)](LICENSE)
 
-**TermiKAZ** é um emulador de terminal e ambiente shell POSIX de altíssimo desempenho desenvolvido em **Rust**. Projetado especificamente para desenvolvedores no Windows, ele oferece um ecossistema completo de comandos Linux nativos (sem necessidade de WSL, Cygwin ou máquinas virtuais), experiência rica de autocompletion com **`[TAB]`**, interface gráfica moderna acelerada por GPU e integração in-process com o ecossistema da linguagem de programação **Kaz v1.2.0** (`kaz.exe`), com suporte a compilação e execução instantânea de bytecode serializado portátil (`.kzc`).
+**TermiKAZ** é um emulador de terminal e ambiente shell POSIX de altíssimo desempenho desenvolvido em **Rust**. Projetado especificamente para desenvolvedores no Windows, ele oferece um ecossistema completo de comandos Linux nativos (sem necessidade de WSL, Cygwin ou máquinas virtuais), experiência rica de autocompletion com **`[TAB]`**, interface gráfica moderna acelerada por GPU e integração in-process com o ecossistema da linguagem de programação **Kaz v1.4.0** (`kaz.exe`), com suporte a compilação e execução instantânea de bytecode serializado portátil (`.kzc`).
 
 </div>
 
